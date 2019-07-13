@@ -1,26 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Route, NavLink, Switch, Redirect} from 'react-router-dom';
+import Home from './Home'
+import About from './About'
+import Contact from './Contact'
+import NotFound from './NotFound'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const Links = () => (
+  <ul>
+    <li>
+      <NavLink exact activeClassName="active" to="/">Home</NavLink>
+    </li>
+    <li>
+      <NavLink to="/about">About</NavLink>
+    </li>
+    <li>
+      <NavLink to="/contact">Contact</NavLink>
+    </li>
+    <li>
+      <NavLink to="/call-us">Call Us</NavLink>
+    </li>
+  </ul>
+)
+
+//stateless function component
+const App = () => (
+  <Router>
+    <Links />
+    <Switch>
+        <Route exact path="/" component={Home}/>
+        <Route path="/about" component={About} />
+        <Route path="/contact" component={Contact} />
+        <Redirect from="/call-us" to="/contact" />
+        <Route path="*" component={NotFound} />
+    </Switch>
+  </Router>
+)
 
 export default App;
